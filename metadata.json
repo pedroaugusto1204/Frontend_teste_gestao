@@ -1,0 +1,6 @@
+{
+  "name": "Growth Solution",
+  "description": "Sistema corporativo para Controle de Contratos e Gestão de Obras.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
