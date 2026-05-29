@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { useAppState } from '../../store';
-import { Bell, ShieldCheck, ChevronDown, Check, AlertCircle } from 'lucide-react';
+import { Bell, ShieldCheck, ChevronDown, Check, AlertCircle, Menu } from 'lucide-react';
 import { ContractStatus, SignatureStatus } from '../../types';
 
-export const Header = () => {
+export const Header = ({ setMobileMenuOpen }: { setMobileMenuOpen?: (open: boolean) => void }) => {
   const { user, company, notifications, markNotificationAsRead, markAllNotificationsAsRead } = useAppState();
   const location = useLocation();
   const [showNotifications, setShowNotifications] = useState(false);
@@ -18,12 +18,20 @@ export const Header = () => {
 
   return (
     <header className="sticky top-0 z-30 h-16 bg-white border-b border-slate-100 px-6 flex items-center justify-between shadow-sm">
-      {/* Breadcrumbs */}
-      <div className="flex items-center gap-2">
-        <span className="text-xs text-slate-400 font-medium">Growth Solution</span>
+      {/* Breadcrumbs with Mobile Hamburger Trigger */}
+      <div className="flex items-center gap-3">
+        <button 
+          onClick={() => setMobileMenuOpen?.(true)}
+          className="p-1.5 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-50 transition-colors md:hidden cursor-pointer shrink-0"
+          title="Abrir menu"
+        >
+          <Menu size={20} />
+        </button>
+
+        <span className="text-xs text-slate-400 font-medium hidden sm:inline-block">Growth Solution</span>
         {pathParts.length > 0 && (
           <>
-            <span className="text-slate-300">/</span>
+            <span className="text-slate-300 hidden sm:inline-block">/</span>
             {pathParts.map((part, index) => {
               const routeTo = `/${pathParts.slice(0, index + 1).join('/')}`;
               const isLast = index === pathParts.length - 1;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { useAppState } from './store';
@@ -25,6 +25,7 @@ import { UsersPage } from './pages/users/UsersPage';
 
 const ProtectedLayout = ({ children }: { children: React.ReactNode }) => {
   const { user, token, sidebarOpen } = useAppState();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const isAuthenticated = !!user && !!token;
 
@@ -35,15 +36,15 @@ const ProtectedLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="min-h-screen bg-[#f8fafc] text-slate-800">
       {/* Sidebar */}
-      <Sidebar />
+      <Sidebar mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
 
       {/* Main Layout shift based on sidebar state */}
       <div 
-        className={`transition-all duration-300 min-h-screen flex flex-col ${
-          sidebarOpen ? 'pl-64' : 'pl-20'
+        className={`transition-all duration-300 min-h-screen flex flex-col pb-20 md:pb-0 ${
+          sidebarOpen ? 'md:pl-64 pl-0' : 'md:pl-20 pl-0'
         }`}
       >
-        <Header />
+        <Header setMobileMenuOpen={setMobileMenuOpen} />
         
         {/* Dynamic Inner view element */}
         <main className="flex-1 p-6 md:p-8 max-w-7xl w-full mx-auto space-y-6">
